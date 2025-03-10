@@ -1,0 +1,60 @@
+name: Check Salesforce Encryption Scheme Changes
+
+on:
+  pull_request:
+    paths:
+      - "classes/*.cls" # Adjust path based on your repo structure
+    branches:
+      - main
+      - "env/**"
+      # - "feature/**"
+
+jobs:
+  check-naming-convention:
+    runs-on: [ubuntu]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
+
+          # If you use VALIDATE_ALL_CODEBASE = true, you can remove this line to
+          # improve performance
+          fetch-depth: 0
+
+      - name: Verify Aapex class naming convention
+        run: |
+          REGEX_PATTERNS=( 
+            "ABC_^[A-Z][A-Za-z]*Test\.cls$"
+            # "^[A-Z][A-Za-z0-9]*Service\.cls$"
+            # "^[A-Z][A-Za-z0-9]*Helper\.cls$"
+          )
+          FILES_CHANGED=$(git diff --name-only --diff-filter=AM origin/main...HEAD -- '*.cls' | xargs -n basename || true)
+
+          if [ -z "$FILES_CHANGED" ]; then
+            echo "No .cls files found with changes"
+            exit 0
+          fi
+
+          EXIT_CODE=0
+          INVALID_FILE=()
+
+          for FILE_NAME in $FILES_CHANGED; do
+            echo "Verifying if $FILE_NAME is following Aapex class naming convention..."
+
+            for PATTERN IN "$REGEX_PATTERNS[@]}"; do
+              if [[ $FILE_NAME =~ $PATTERN ]]; then
+                matched=true
+                break
+              else
+                matched=false
+              fi
+            done
+
+            if [ "$matched" = true ]; then
+              $FILE_NAME passed naming convention
+            else
+              INVALID_FILES+=("$FILE_NAME")
+              $FILE_NAME has not passed naming convention check!
+            fi
+          done
