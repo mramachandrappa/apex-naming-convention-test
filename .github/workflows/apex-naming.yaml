@@ -10,7 +10,7 @@ on:
       # - "feature/**"
 
 jobs:
-  check-naming-convention:
+  check-naming-convention: 
     runs-on: [ubuntu]
     steps:
       - name: Checkout code
