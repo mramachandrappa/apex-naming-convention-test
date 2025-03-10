@@ -2,8 +2,8 @@ name: Check Salesforce Encryption Scheme Changes
 
 on:
   pull_request:
-    paths:
-      - "classes/*.cls" # Adjust path based on your repo structure
+    # paths:
+    #   - "classes/*.cls" # Adjust path based on your repo structure
     branches:
       - main
       - "env/**"
