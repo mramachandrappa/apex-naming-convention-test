@@ -49,3 +49,4 @@ jobs:
             **Apex Class Naming Convention Check**
             - Result        : ${{ steps.apex_check.outputs.APEX_CLS_NAME_CHECK }}
             - Invalid Files : ${{ steps.apex_check.outputs.INVALID_FILES }}
+          edit-mode: replace
