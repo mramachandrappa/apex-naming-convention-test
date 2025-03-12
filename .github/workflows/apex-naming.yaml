@@ -67,7 +67,7 @@ jobs:
           else
               echo "Invalid File names found!"
               echo "INVALID_FILES : $INVALID_FILES"
-              apex-class-names-check="Failed!""
+              apex-class-names-check="Failed!"
 
           echo "INVALID_FILES=$INVALID_FILES" >> $GITHUB_OUTPUT          
           echo "APEX_CLS_NAME_CHECK=$apex-class-names-check" >> $GITHUB_OUTPUT   
