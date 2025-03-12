@@ -36,8 +36,8 @@ jobs:
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            *Apex Class Naming Convention Check*
-            - *Status*: ${{ steps.apex_check.outputs.APEX_CLS_NAME_CHECK }}
-            - Invalid Files: ${{ steps.apex_check.outputs.INVALID_FILES }}
+            **Apex Class Naming Convention Check**
+            - Result        : ${{ steps.apex_check.outputs.APEX_CLS_NAME_CHECK }}
+            - Invalid Files : ${{ steps.apex_check.outputs.INVALID_FILES }}
           reactions: "+1"
           comment-id: "APEX_CLS_NAME_CHECK"
