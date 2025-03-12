@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 
-INVALID_FILES=()
+declare -a INVALID_FILES=()
 APEX_CLS_NAME_CHECK="Passed!"
 
 REGEX_PATTERNS=( 
             "^A3A_[A-Za-z]+Testing\.cls$"
-            "^ABC_[A-Za-z]+Service\.cls"
+            "^ABC_[A-Za-z]+Service\.cls$"
             "^A3C_[A-Za-z]+Service\.cls$"
-        )
+            )
+
 FILES_CHANGED=($(git diff --name-only --diff-filter=AM origin/main...HEAD -- '*.cls' | xargs -I {} basename {}))
 
 echo "Found following .cls files with change \n $FILES_CHANGED"''
