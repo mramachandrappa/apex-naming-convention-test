@@ -6,15 +6,18 @@ on:
     #   - "classes/*.cls" # Adjust path based on your repo structure
     branches:
       - main
-      - "env/**"
       # - "feature/**"
 
+permissions:
+  pull-requests: write
+  contents: read
+
 jobs:
-  check-naming-convention: 
-    runs-on: [ubuntu]
+  check-naming-convention:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # pin@v4
         with:
           token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
 
@@ -22,39 +25,28 @@ jobs:
           # improve performance
           fetch-depth: 0
 
-      - name: Verify Aapex class naming convention
+      - name: Verify Apex class naming convention
+        id: apex_check
         run: |
-          REGEX_PATTERNS=( 
-            "ABC_^[A-Z][A-Za-z]*Test\.cls$"
-            # "^[A-Z][A-Za-z0-9]*Service\.cls$"
-            # "^[A-Z][A-Za-z0-9]*Helper\.cls$"
-          )
-          FILES_CHANGED=$(git diff --name-only --diff-filter=AM origin/main...HEAD -- '*.cls' | xargs -n basename || true)
+          bash .github/workflows/apex_name_check.sh
 
-          if [ -z "$FILES_CHANGED" ]; then
-            echo "No .cls files found with changes"
-            exit 0
-          fi
+      - name: Find Comment
+        if: success() || failure() 
+        uses: peter-evans/find-comment@v3
+        id: find_comment
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: Apex Class Naming Convention Check
 
-          EXIT_CODE=0
-          INVALID_FILE=()
-
-          for FILE_NAME in $FILES_CHANGED; do
-            echo "Verifying if $FILE_NAME is following Aapex class naming convention..."
-
-            for PATTERN IN "$REGEX_PATTERNS[@]}"; do
-              if [[ $FILE_NAME =~ $PATTERN ]]; then
-                matched=true
-                break
-              else
-                matched=false
-              fi
-            done
-
-            if [ "$matched" = true ]; then
-              $FILE_NAME passed naming convention
-            else
-              INVALID_FILES+=("$FILE_NAME")
-              $FILE_NAME has not passed naming convention check!
-            fi
-          done
+      - name: Post Apex class naming convention as a PR comment
+        if: success() || failure()  # This ensures the step runs even if a previous step fails
+        uses: peter-evans/create-or-update-comment@fb32f438a02fd91daaa409c30aae6f6b8d58b608 #pinv4
+        with:
+          comment-id: ${{ steps.find_comment.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            **Apex Class Naming Convention Check**
+            - Result        : ${{ steps.apex_check.outputs.APEX_CLS_NAME_CHECK }}
+            - Invalid Files : ${{ steps.apex_check.outputs.INVALID_FILES }}
+          edit-mode: replace
