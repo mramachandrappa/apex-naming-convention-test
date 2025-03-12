@@ -45,11 +45,11 @@ jobs:
 
               for PATTERN in ${REGEX_PATTERNS[@]}; do
                   if [[ $FILE_NAME =~ $PATTERN ]]; then
-                      matched=true
-                      break
+                    matched=true
+                    break
                   else
-                      matched=false
-                  fi ;
+                    matched=false
+                  fi
               done
 
               if [ "$matched" = true ]; then
@@ -57,7 +57,7 @@ jobs:
               else
                   INVALID_FILES+=("$FILE_NAME")
                   echo "$FILE_NAME has not passed naming convention check!"
-              fi ;
+              fi
           done
 
           if [ ${#INVALID_FILES[@]} -eq 0 ]; then
