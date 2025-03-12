@@ -70,7 +70,6 @@ jobs:
               apex-class-names-check=Failed! 
 
           echo "INVALID_FILES=$INVALID_FILES" >> $GITHUB_OUTPUT
-          echo "APEX_CLS_NAME_CHECK=$apex-class-names-check" >> $GITHUB_OUTPUT   
 
       - name: Post Apex class naming convention as a PR comment
         if: success() || failure()  # This ensures the step runs even if a previous step fails
