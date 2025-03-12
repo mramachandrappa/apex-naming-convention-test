@@ -51,8 +51,8 @@ jobs:
                     matched=false
                   fi
               done
-
-              if [ $matched = true ]; then
+              echo $matched
+              if [ $matched ]; then
                   echo "$FILE_NAME passed naming convention"
               else
                   INVALID_FILES+=("$FILE_NAME")
