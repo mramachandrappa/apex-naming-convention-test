@@ -65,14 +65,16 @@ jobs:
           if [ ${#INVALID_FILES[@]} -eq 0 ]; then
               echo "Changes are valid!"
               INVALID_FILES=None!
+              echo "INVALID_FILES=$INVALID_FILES" >> $GITHUB_OUTPUT
+              echo "APEX_CLS_NAME_CHECK=$APEX_CLS_NAME_CHECK" >> $GITHUB_OUTPUT
           else
               echo "Invalid File names found!"
               echo "INVALID_FILES : $INVALID_FILES"
               APEX_CLS_NAME_CHECK="Failed!"
+              echo "INVALID_FILES=$INVALID_FILES" >> $GITHUB_OUTPUT
+              echo "APEX_CLS_NAME_CHECK=$APEX_CLS_NAME_CHECK" >> $GITHUB_OUTPUT
+              exit 1
           fi
-
-          echo "INVALID_FILES=$INVALID_FILES" >> $GITHUB_OUTPUT
-          echo "APEX_CLS_NAME_CHECK=$APEX_CLS_NAME_CHECK" >> $GITHUB_OUTPUT
 
 
       - name: Post Apex class naming convention as a PR comment
