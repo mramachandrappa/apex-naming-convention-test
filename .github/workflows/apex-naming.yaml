@@ -72,7 +72,6 @@ jobs:
               exit 1
           fi
 
-
       - name: Post Apex class naming convention as a PR comment
         if: success() || failure()  # This ensures the step runs even if a previous step fails
         uses: peter-evans/create-or-update-comment@v4 #pinv4
