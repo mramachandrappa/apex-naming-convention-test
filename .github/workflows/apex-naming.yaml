@@ -43,8 +43,6 @@ jobs:
           fi
 
           for FILE_NAME in ${FILES_CHANGED[@]}; do
-              echo "Verifying if $FILE_NAME is following Aapex class naming convention..."
-
               for PATTERN in ${REGEX_PATTERNS[@]}; do
                   if [[ $FILE_NAME =~ $PATTERN ]]; then
                     matched=true
@@ -63,13 +61,11 @@ jobs:
           done
 
           if [ ${#INVALID_FILES[@]} -eq 0 ]; then
-              echo "Changes are valid!"
               INVALID_FILES=None!
               echo "INVALID_FILES=$INVALID_FILES" >> $GITHUB_OUTPUT
               echo "APEX_CLS_NAME_CHECK=$APEX_CLS_NAME_CHECK" >> $GITHUB_OUTPUT
           else
-              echo "Invalid File names found!"
-              echo "INVALID_FILES : $INVALID_FILES"
+              echo "Found Invalid Files : $INVALID_FILES"
               APEX_CLS_NAME_CHECK="Failed!"
               echo "INVALID_FILES=$INVALID_FILES" >> $GITHUB_OUTPUT
               echo "APEX_CLS_NAME_CHECK=$APEX_CLS_NAME_CHECK" >> $GITHUB_OUTPUT
