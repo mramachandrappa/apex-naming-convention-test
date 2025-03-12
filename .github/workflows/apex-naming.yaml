@@ -8,6 +8,8 @@ on:
       - main
       - "env/**"
       # - "feature/**"
+  push:
+    branches: ["**"]
 
 jobs:
   check-naming-convention: 
