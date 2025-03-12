@@ -52,7 +52,7 @@ jobs:
                   fi
               done
 
-              if [ "$matched" = true ]; then
+              if [ $matched = true ]; then
                   echo "$FILE_NAME passed naming convention"
               else
                   INVALID_FILES+=("$FILE_NAME")
