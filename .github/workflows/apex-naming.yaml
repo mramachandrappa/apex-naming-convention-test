@@ -11,11 +11,11 @@ on:
     branches: ["**"]
 
 jobs:
-  check-naming-convention: 
-    runs-on: ubuntu-latest
+  check-naming-convention:
+    runs-on: [cqp-self-hosted]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # pin@v4
         with:
           token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
 
@@ -23,39 +23,66 @@ jobs:
           # improve performance
           fetch-depth: 0
 
-      - name: Verify Aapex class naming convention
+      - name: Verify Apex class naming convention
+        id: apex_check
         run: |
           REGEX_PATTERNS=( 
-            "ABC_^[A-Z][A-Za-z]*Test\.cls$"
-            # "^[A-Z][A-Za-z0-9]*Service\.cls$"
-            # "^[A-Z][A-Za-z0-9]*Helper\.cls$"
-          )
-          FILES_CHANGED=$(git diff --name-only --diff-filter=AM origin/main...HEAD -- '*.cls' | xargs -n basename || true)
+                      "^A3A_[A-Za-z]+Testing\.cls$"
+                      "^ABC_[A-Za-z]+Service\.cls"
+                      "^A3C_[A-Za-z]+Service\.cls$"
+                    )
+          FILES_CHANGED=($(git diff --name-only --diff-filter=AM origin/main...HEAD -- '*.cls' | xargs -I {} basename {}))
 
-          if [ -z "$FILES_CHANGED" ]; then
-            echo "No .cls files found with changes"
-            exit 0
+          echo "Found following .cls files with change \n $FILES_CHANGED"''
+
+          if [ ${#FILES_CHANGED[@]} -eq 0 ]; then
+              echo "No .cls files found with changes"
+              exit 0
           fi
 
-          EXIT_CODE=0
           INVALID_FILE=()
 
-          for FILE_NAME in $FILES_CHANGED; do
-            echo "Verifying if $FILE_NAME is following Aapex class naming convention..."
+          for FILE_NAME in ${FILES_CHANGED[@]}; do
+              echo "Verifying if $FILE_NAME is following Aapex class naming convention..."
 
-            for PATTERN IN "$REGEX_PATTERNS[@]}"; do
-              if [[ $FILE_NAME =~ $PATTERN ]]; then
-                matched=true
-                break
+              for PATTERN in ${REGEX_PATTERNS[@]}; do
+                  if [[ $FILE_NAME =~ $PATTERN ]]; then
+                      matched=true
+                      break
+                  else
+                      matched=false
+                  fi
+              done
+
+              if [ "$matched" = true ]; then
+                  echo "$FILE_NAME passed naming convention"
               else
-                matched=false
+                  INVALID_FILES+=("$FILE_NAME")
+                  echo "$FILE_NAME has not passed naming convention check!"
               fi
-            done
-
-            if [ "$matched" = true ]; then
-              $FILE_NAME passed naming convention
-            else
-              INVALID_FILES+=("$FILE_NAME")
-              $FILE_NAME has not passed naming convention check!
-            fi
           done
+
+          if [ ${#INVALID_FILES[@]} -eq 0 ]; then
+              echo "Changes are valid!"
+              apex-class-names-check=Passed!
+              INVALID_FILES=None!
+          else
+              echo "Invalid File names found!"
+              echo "INVALID_FILES : $INVALID_FILES"
+              apex-class-names-check=Failed! 
+
+          echo "INVALID_FILES=$INVALID_FILES" >> $GITHUB_OUTPUT
+          echo "APEX_CLS_NAME_CHECK=$apex-class-names-check" >> $GITHUB_OUTPUT   
+
+      - name: Post Apex class naming convention as a PR comment
+        if: success() || failure()  # This ensures the step runs even if a previous step fails
+        uses: peter-evans/create-or-update-comment@fb32f438a02fd91daaa409c30aae6f6b8d58b608 #pinv4
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            *Apex Class Naming Convention Check*
+            - *Status*: ${{ steps.apex_check.outputs.APEX_CLS_NAME_CHECK }}
+            - Invalid Files: ${{ steps.apex_check.outputs.INVALID_FILES }}
+          reactions: "+1"
+          edit-mode: replace
+          comment-id: "APEX_CLS_NAME_CHECK"
