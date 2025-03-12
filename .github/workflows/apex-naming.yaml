@@ -24,7 +24,7 @@ jobs:
       - name: Verify Apex class naming convention
         id: apex_check
         run: |
-          sh apex_name_check.sh
+          sh ./apex_name_check.sh
 
       - name: Post Apex class naming convention as a PR comment
         if: success() || failure()  # This ensures the step runs even if a previous step fails
