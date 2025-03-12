@@ -76,7 +76,7 @@ jobs:
 
       - name: Post Apex class naming convention as a PR comment
         if: success() || failure()  # This ensures the step runs even if a previous step fails
-        uses: peter-evans/create-or-update-comment@fb32f438a02fd91daaa409c30aae6f6b8d58b608 #pinv4
+        uses: peter-evans/create-or-update-comment@v4 #pinv4
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
@@ -84,5 +84,4 @@ jobs:
             - *Status*: ${{ steps.apex_check.outputs.APEX_CLS_NAME_CHECK }}
             - Invalid Files: ${{ steps.apex_check.outputs.INVALID_FILES }}
           reactions: "+1"
-          edit-mode: replace
           comment-id: "APEX_CLS_NAME_CHECK"
