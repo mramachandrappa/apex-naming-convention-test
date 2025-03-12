@@ -6,14 +6,13 @@ on:
     #   - "classes/*.cls" # Adjust path based on your repo structure
     branches:
       - main
-      - "env/**"
       # - "feature/**"
   push:
     branches: ["**"]
 
 jobs:
   check-naming-convention: 
-    runs-on: [ubuntu]
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
