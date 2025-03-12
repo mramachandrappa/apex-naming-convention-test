@@ -24,7 +24,7 @@ jobs:
       - name: Verify Apex class naming convention
         id: apex_check
         run: |
-          INVALID_FILE=()
+          INVALID_FILES=()
           APEX_CLS_NAME_CHECK="Passed!"
 
           REGEX_PATTERNS=( 
@@ -38,7 +38,7 @@ jobs:
 
           if [ ${#FILES_CHANGED[@]} -eq 0 ]; then
               echo "No .cls files found with changes"
-              INVALID_FILE="None!"
+              INVALID_FILES="None!"
               exit 0
           fi
 
