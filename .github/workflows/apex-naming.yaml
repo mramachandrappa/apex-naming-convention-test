@@ -31,12 +31,13 @@ jobs:
           bash .github/workflows/apex_name_check.sh
 
       - name: Find Comment
+        if: success() || failure() 
         uses: peter-evans/find-comment@v3
         id: find_comment
         with:
-            issue-number: ${{ github.event.pull_request.number }}
-            comment-author: 'github-actions[bot]'
-            body-includes: Apex Class Naming Convention Check
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: Apex Class Naming Convention Check
 
       - name: Post Apex class naming convention as a PR comment
         if: success() || failure()  # This ensures the step runs even if a previous step fails
@@ -48,3 +49,4 @@ jobs:
             **Apex Class Naming Convention Check**
             - Result        : ${{ steps.apex_check.outputs.APEX_CLS_NAME_CHECK }}
             - Invalid Files : ${{ steps.apex_check.outputs.INVALID_FILES }}
+          edit-mode: replace
