@@ -8,6 +8,10 @@ on:
       - main
       # - "feature/**"
 
+permissions:
+  pull-requests: write
+  contents: read
+
 jobs:
   check-naming-convention:
     runs-on: ubuntu-latest
