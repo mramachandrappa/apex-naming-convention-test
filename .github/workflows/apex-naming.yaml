@@ -24,6 +24,9 @@ jobs:
       - name: Verify Apex class naming convention
         id: apex_check
         run: |
+          INVALID_FILE=()
+          APEX_CLS_NAME_CHECK="Passed!"
+
           REGEX_PATTERNS=( 
                       "^A3A_[A-Za-z]+Testing\.cls$"
                       "^ABC_[A-Za-z]+Service\.cls"
@@ -35,10 +38,9 @@ jobs:
 
           if [ ${#FILES_CHANGED[@]} -eq 0 ]; then
               echo "No .cls files found with changes"
+              INVALID_FILE="None!"
               exit 0
           fi
-
-          INVALID_FILE=()
 
           for FILE_NAME in ${FILES_CHANGED[@]}; do
               echo "Verifying if $FILE_NAME is following Aapex class naming convention..."
@@ -62,16 +64,15 @@ jobs:
 
           if [ ${#INVALID_FILES[@]} -eq 0 ]; then
               echo "Changes are valid!"
-              apex_cls_name_check="Passed!"
               INVALID_FILES=None!
           else
               echo "Invalid File names found!"
               echo "INVALID_FILES : $INVALID_FILES"
-              apex_cls_name_check="Failed!"
+              APEX_CLS_NAME_CHECK="Failed!"
           fi
 
           echo "INVALID_FILES=$INVALID_FILES" >> $GITHUB_OUTPUT
-          echo "APEX_CLS_NAME_CHECK=$apex_cls_name_check" >> $GITHUB_OUTPUT
+          echo "APEX_CLS_NAME_CHECK=$APEX_CLS_NAME_CHECK" >> $GITHUB_OUTPUT
 
 
       - name: Post Apex class naming convention as a PR comment
