@@ -8,7 +8,7 @@ REGEX_PATTERNS=(
 )
 
 # Get changed .cls files
-FILES_CHANGED=($(git diff --name-only --diff-filter=AM origin/main...HEAD -- '*.cls'))
+FILES_CHANGED=($(git diff --name-only --diff-filter=AM origin/main...HEAD -- '*.cls*'))
 
 echo -e "Found the following .cls files with changes:\n${FILES_CHANGED[*]}\n"
 
