@@ -4,9 +4,7 @@ declare -a INVALID_FILES=()
 APEX_CLS_NAME_CHECK="Passed!"
 
 REGEX_PATTERNS=(
-    "^A3A_[A-Za-z]+Test\.cls$"
-    "^ABC_[A-Za-z]+Service\.cls$"
-    "^A3C_[A-Za-z]+Service\.cls$"
+    "^(?:A3A|A3C|appomni__AppOmni|BFCC|BFCCQIO|ChangePassword|CMS|Communities|CQP|FQS|ForgotPassword|LoginAs|Microbatch|MyProfilePage|OutcomeReportLWC|PicklistValues|SEIAV|SiteLogin|SiteRegister|Test_SEIAV|UserDeProvisioning)[a-zA-Z]*\.cls$"
 )
 
 # Get changed .cls files
