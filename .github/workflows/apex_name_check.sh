@@ -3,9 +3,13 @@
 declare -a INVALID_FILES=()
 APEX_CLS_NAME_CHECK="Passed!"
 
+# REGEX_PATTERNS=(
+#     "^(A3A|A3C|appomni__AppOmni|BFCC|BFCCQIO|ChangePassword|CMS|Communities|CQP|FQS|ForgotPassword|LoginAs|Microbatch|MyProfilePage|OutcomeReportLWC|PicklistValues|SEIAV|SiteLogin|SiteRegister|Test_SEIAV|UserDeProvisioning)[_a-zA-Z]*\.(cls|cls-meta\.xml)$"
+# )
+
 REGEX_PATTERNS=(
-    "^(A3A|A3C|appomni__AppOmni|BFCC|BFCCQIO|ChangePassword|CMS|Communities|CQP|FQS|ForgotPassword|LoginAs|Microbatch|MyProfilePage|OutcomeReportLWC|PicklistValues|SEIAV|SiteLogin|SiteRegister|Test_SEIAV|UserDeProvisioning)[_a-zA-Z]*\.(cls|cls-meta\.xml)$"
-)
+    "(?i)^(A3A|A3C|appomni__AppOmni|BFCC|BFCCQIO|ChangePassword|CMS|Communities|CQP|cQP|FQS|NetworkUtility|ForgotPassword|LoginAs|Microbatch|MyProfilePage|OutcomeReportLWC|PicklistValues|SEIAV|SiteLogin|SiteRegister|Test_SEIAV|UserDeProvisioning)[_a-zA-Z0-9]*\.(cls|cls-meta\.xml)$"
+    )
 
 # Get changed .cls files
 FILES_CHANGED=($(git diff --name-only --diff-filter=AM origin/main...HEAD -- '*.cls*'))
