@@ -3,9 +3,9 @@
 declare -a INVALID_FILES=()
 APEX_CLS_NAME_CHECK="Passed!"
 
-# REGEX_PATTERNS=(
-#     "^(A3A|A3C|appomni__AppOmni|BFCC|BFCCQIO|ChangePassword|CMS|Communities|CQP|FQS|ForgotPassword|LoginAs|Microbatch|MyProfilePage|OutcomeReportLWC|PicklistValues|SEIAV|SiteLogin|SiteRegister|Test_SEIAV|UserDeProvisioning)[_a-zA-Z]*\.(cls|cls-meta\.xml)$"
-# )
+# REGEX_PATTERNS is defined in repository variable
+
+echo "REGEX_PATTERN is ${vars.REGEX_PATTERNS[@]}
 
 
 # Get changed .cls files
