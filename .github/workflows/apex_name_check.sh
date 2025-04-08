@@ -26,7 +26,7 @@ for FILE_PATH in "${FILES_CHANGED[@]}"; do
     FILE_NAME=$(basename "$FILE_PATH")
     matched=false
 
-    if echo "$FILE_NAME" | grep -Eq "$REGEX_PATTERN"; then
+    if echo "$FILE_NAME" | grep -Eiq "$REGEX_PATTERN"; then
         echo "$FILE_NAME passed naming convention check."
     else
         INVALID_FILES+=("$FILE_NAME")
