@@ -3,9 +3,11 @@
 declare -a INVALID_FILES=()
 APEX_CLS_NAME_CHECK="Passed!"
 
-REGEX_PATTERNS=(
-    "^(A3A|A3C|appomni__AppOmni|BFCC|BFCCQIO|ChangePassword|CMS|Communities|CQP|FQS|ForgotPassword|LoginAs|Microbatch|MyProfilePage|OutcomeReportLWC|PicklistValues|SEIAV|SiteLogin|SiteRegister|Test_SEIAV|UserDeProvisioning)[_a-zA-Z]*\.(cls|cls-meta\.xml)$"
-)
+# REGEX_PATTERNS is defined in repository variable
+REGEX_PATTERN=("^(A3A|A3C|appomni__AppOmni|BFCC|BFCCQIO|ChangePassword|CMS|Communities|CQP|FQS|ForgotPassword|LoginAs|Microbatch|MyProfilePage|OutcomeReportLWC|PicklistValues|SEIAV|SiteLogin|SiteRegister|Test_SEIAV|UserDeProvisioning)[_a-zA-Z]*\.(cls|cls-meta\.xml)$")
+
+echo "REGEX_PATTERN is $REGEX_PATTERN"
+
 
 # Get changed .cls files
 FILES_CHANGED=($(git diff --name-only --diff-filter=AM origin/main...HEAD -- '*.cls*'))
@@ -24,14 +26,7 @@ for FILE_PATH in "${FILES_CHANGED[@]}"; do
     FILE_NAME=$(basename "$FILE_PATH")
     matched=false
 
-    for PATTERN in "${REGEX_PATTERNS[@]}"; do
-        if [[ $FILE_NAME =~ $PATTERN ]]; then
-            matched=true
-            break
-        fi
-    done
-
-    if $matched; then
+    if echo "$FILE_NAME" | grep -Eiq "$REGEX_PATTERN"; then
         echo "$FILE_NAME passed naming convention check."
     else
         INVALID_FILES+=("$FILE_NAME")

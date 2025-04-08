@@ -27,6 +27,8 @@ jobs:
 
       - name: Verify Apex class naming convention
         id: apex_check
+        env:
+          REGEX_PATTERN: ${{ vars.REGEX_PATTERN }}
         run: |
           bash .github/workflows/apex_name_check.sh
 
