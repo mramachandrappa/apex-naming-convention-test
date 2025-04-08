@@ -4,8 +4,7 @@ on:
   push:
     # paths:
     #   - "classes/*.cls" # Adjust path based on your repo structure
-    branches:
-      - main
+    branches: ["**"]
       # - "feature/**"
 
 permissions:
