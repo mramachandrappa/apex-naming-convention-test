@@ -3,13 +3,9 @@
 declare -a INVALID_FILES=()
 APEX_CLS_NAME_CHECK="Passed!"
 
-# REGEX_PATTERNS=(
-#     "^(A3A|A3C|appomni__AppOmni|BFCC|BFCCQIO|ChangePassword|CMS|Communities|CQP|FQS|ForgotPassword|LoginAs|Microbatch|MyProfilePage|OutcomeReportLWC|PicklistValues|SEIAV|SiteLogin|SiteRegister|Test_SEIAV|UserDeProvisioning)[_a-zA-Z]*\.(cls|cls-meta\.xml)$"
-# )
-
 REGEX_PATTERNS=(
-    "(?i)^(A3A|A3C|appomni__AppOmni|BFCC|BFCCQIO|ChangePassword|CMS|Communities|CQP|cQP|FQS|NetworkUtility|ForgotPassword|LoginAs|Microbatch|MyProfilePage|OutcomeReportLWC|PicklistValues|SEIAV|SiteLogin|SiteRegister|Test_SEIAV|UserDeProvisioning)[_a-zA-Z0-9]*\.(cls|cls-meta\.xml)$"
-    )
+    "^(A3A|A3C|appomni__AppOmni|BFCC|BFCCQIO|ChangePassword|CMS|Communities|CQP|FQS|ForgotPassword|LoginAs|Microbatch|MyProfilePage|OutcomeReportLWC|PicklistValues|SEIAV|SiteLogin|SiteRegister|Test_SEIAV|UserDeProvisioning)[_a-zA-Z]*\.(cls|cls-meta\.xml)$"
+)
 
 # Get changed .cls files
 FILES_CHANGED=($(git diff --name-only --diff-filter=AM origin/main...HEAD -- '*.cls*'))
@@ -29,7 +25,8 @@ for FILE_PATH in "${FILES_CHANGED[@]}"; do
     matched=false
 
     for PATTERN in "${REGEX_PATTERNS[@]}"; do
-        if [[ $FILE_NAME =~ $PATTERN ]]; then
+        echo "$FILE_NAME" | grep -Ei "$PATTERN" > /dev/null
+        if [[ $? -eq 0 ]]; then
             matched=true
             break
         fi
