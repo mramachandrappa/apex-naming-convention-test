@@ -4,6 +4,9 @@ declare -a INVALID_FILES=()
 APEX_CLS_NAME_CHECK="Passed!"
 
 # REGEX_PATTERNS is defined in repository variable
+# REGEX_PATTERNS_TEST=(
+#     "^(A3A|A3C|appomni__AppOmni|BFCC|BFCCQIO|ChangePassword|CMS|Communities|CQP|FQS|ForgotPassword|LoginAs|Microbatch|MyProfilePage|OutcomeReportLWC|PicklistValues|SEIAV|SiteLogin|SiteRegister|Test_SEIAV|UserDeProvisioning)[_a-zA-Z]*\.(cls|cls-meta\.xml)$"
+# )
 
 echo "REGEX_PATTERN is $REGEX_PATTERN"
 
@@ -25,7 +28,7 @@ for FILE_PATH in "${FILES_CHANGED[@]}"; do
     FILE_NAME=$(basename "$FILE_PATH")
     matched=false
 
-    for PATTERN in "$REGEX_PATTERN[@]"; do
+    for PATTERN in "${REGEX_PATTERNS_TEST[@]}"; do
         echo "$FILE_NAME" | grep -Ei "$PATTERN" > /dev/null
         if [[ $? -eq 0 ]]; then
             matched=true
