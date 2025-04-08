@@ -25,7 +25,7 @@ for FILE_PATH in "${FILES_CHANGED[@]}"; do
     FILE_NAME=$(basename "$FILE_PATH")
     matched=false
 
-    for PATTERN in "${REGEX_PATTERN[@]}"; do
+    for PATTERN in "$REGEX_PATTERN[@]"; do
         echo "$FILE_NAME" | grep -Ei "$PATTERN" > /dev/null
         if [[ $? -eq 0 ]]; then
             matched=true
