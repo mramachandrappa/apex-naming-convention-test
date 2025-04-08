@@ -5,7 +5,7 @@ APEX_CLS_NAME_CHECK="Passed!"
 
 # REGEX_PATTERNS is defined in repository variable
 
-echo "REGEX_PATTERN is ${vars.REGEX_PATTERNS}"
+echo "REGEX_PATTERN is ${{vars.REGEX_PATTERNS}}"
 
 
 # Get changed .cls files
