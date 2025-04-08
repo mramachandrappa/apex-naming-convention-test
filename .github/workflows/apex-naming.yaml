@@ -1,10 +1,11 @@
 name: Check Salesforce Encryption Scheme Changes
 
 on:
-  push:
+  pull_request:
     # paths:
     #   - "classes/*.cls" # Adjust path based on your repo structure
-    branches: ["**"]
+    branches:
+      - main
       # - "feature/**"
 
 permissions:
