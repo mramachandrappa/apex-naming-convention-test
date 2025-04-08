@@ -5,8 +5,7 @@ APEX_CLS_NAME_CHECK="Passed!"
 
 # REGEX_PATTERNS is defined in repository variable
 
-echo "REGEX_PATTERN is ${{ vars.REGEX_PATTERN }}"
-echo "REGEX_PATTERN_ENV is $REGEX_PATTERN_ENV"
+echo "REGEX_PATTERN is $REGEX_PATTERN"
 
 
 # Get changed .cls files
@@ -26,7 +25,7 @@ for FILE_PATH in "${FILES_CHANGED[@]}"; do
     FILE_NAME=$(basename "$FILE_PATH")
     matched=false
 
-    for PATTERN in "${vars.REGEX_PATTERN[@]}"; do
+    for PATTERN in "${REGEX_PATTERN[@]}"; do
         echo "$FILE_NAME" | grep -Ei "$PATTERN" > /dev/null
         if [[ $? -eq 0 ]]; then
             matched=true
