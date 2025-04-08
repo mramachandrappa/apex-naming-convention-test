@@ -3,9 +3,8 @@
 declare -a INVALID_FILES=()
 APEX_CLS_NAME_CHECK="Passed!"
 
-# REGEX_PATTERNS is defined in repository variable
+echo "REGEX_PATTERNS is defined in repository variable"
 echo "REGEX_PATTERN is $REGEX_PATTERN"
-
 
 # Get changed .cls files
 FILES_CHANGED=($(git diff --name-only --diff-filter=AM origin/main...HEAD -- '*.cls*'))
