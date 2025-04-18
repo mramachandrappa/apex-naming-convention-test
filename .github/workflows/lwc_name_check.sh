@@ -7,7 +7,7 @@ echo "REGEX_PATTERNS is defined in repository variable"
 echo "REGEX_PATTERN is $REGEX_PATTERN"
 
 # Get changed .cls files
-FILES_CHANGED=$(git diff --name-only --diff-filter=A origin/main...HEAD -- 'lwc/*')
+FILES_CHANGED=($(git diff --name-only --diff-filter=A origin/main...HEAD -- 'lwc/*'))
 
 echo -e "Found the following lwc components with changes:\n${FILES_CHANGED[*]}\n"
 
