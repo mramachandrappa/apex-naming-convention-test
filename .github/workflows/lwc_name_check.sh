@@ -3,7 +3,7 @@
 declare -a INVALID_FILES=()
 LWC_NAME_CHECK="Passed!"
 
-echo "REGEX_PATTERNS is defined in repository variable"
+echo "REGEX_PATTERN is defined in repository variable"
 echo "REGEX_PATTERN is $REGEX_PATTERN"
 
 # Get changed .cls files
