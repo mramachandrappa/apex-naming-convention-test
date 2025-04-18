@@ -9,10 +9,10 @@ echo "REGEX_PATTERN is $REGEX_PATTERN"
 # Get changed .cls files
 FILES_CHANGED=$(git diff --name-only --diff-filter=A origin/main...HEAD -- 'lwc/*')
 
-echo -e "Found the following .cls files with changes:\n${FILES_CHANGED[*]}\n"
+echo -e "Found the following lwc components with changes:\n${FILES_CHANGED[*]}\n"
 
 if [[ ${#FILES_CHANGED[@]} -eq 0 ]]; then
-    echo "No .cls files found with changes."
+    echo "No lwc components with changes"
     echo "INVALID_FILES=None!" >> "$GITHUB_OUTPUT"
     echo "LWC_NAME_CHECK=$LWC_NAME_CHECK" >> "$GITHUB_OUTPUT"
     exit 0
