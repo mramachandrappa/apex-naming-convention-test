@@ -20,14 +20,14 @@ fi
 
 # Validate naming conventions
 for FILE_PATH in "${FILES_CHANGED[@]}"; do
-    FILE_NAME=$(basename "$FILE_PATH")
+    COMPONENT_NAME=$(echo "$FILE_PATH" | cut -d'/' -f2)  
     matched=false
 
-    if echo "$FILE_NAME" | grep -Eiq "$REGEX_PATTERN"; then
-        echo "$FILE_NAME passed naming convention check."
+    if echo "$COMPONENT_NAME" | grep -Eiq "$REGEX_PATTERN"; then
+        echo "$COMPONENT_NAME passed naming convention check."
     else
-        INVALID_FILES+=("$FILE_NAME")
-        echo "$FILE_NAME did NOT pass the naming convention check!"
+        INVALID_FILES+=("$COMPONENT_NAME")
+        echo "$COMPONENT_NAME did NOT pass the naming convention check!"
     fi
 done
 
