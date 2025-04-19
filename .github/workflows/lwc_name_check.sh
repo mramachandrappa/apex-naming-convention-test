@@ -33,11 +33,11 @@ done
 
 # Output results
 if [[ ${#INVALID_FILES[@]} -eq 0 ]]; then
-    echo "All LWC components passed naming conventions."
+    echo "\nAll LWC components passed naming conventions."
     echo "INVALID_FILES=None!" >> "$GITHUB_OUTPUT"
     echo "LWC_NAME_CHECK=$LWC_NAME_CHECK" >> "$GITHUB_OUTPUT"
 else
-    echo -e "INVALID LWC components name found!:\n${INVALID_FILES[*]}"
+    echo -e "\nINVALID LWC components name found!:\n${INVALID_FILES[*]}"
     LWC_NAME_CHECK="Failed!"
     echo "INVALID_FILES=${INVALID_FILES[*]}" >> "$GITHUB_OUTPUT"
     echo "LWC_NAME_CHECK=$LWC_NAME_CHECK" >> "$GITHUB_OUTPUT"
