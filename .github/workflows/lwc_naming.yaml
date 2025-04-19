@@ -2,8 +2,8 @@ name: "Workflow: LWS naming convention check"
 
 on:
   pull_request:
-    # paths:
-    #   - "lwc/*" # Adjust path based on your repo structure
+    paths:
+      - "lwc/*" # Adjust path based on your repo structure
     branches:
       - main
       # - "feature/**"
