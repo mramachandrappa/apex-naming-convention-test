@@ -1,4 +1,4 @@
-name: "Workflow: LWS naming convention check"
+name: "Workflow: LWS component naming convention check"
 
 on:
   pull_request:
