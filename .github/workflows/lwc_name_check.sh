@@ -6,6 +6,7 @@ LWC_NAME_CHECK="Passed!"
 echo "REGEX_PATTERN is defined in repository variable"
 echo "REGEX_PATTERN is $REGEX_PATTERN"
 
+REGEX_PATTERN="^[a-z]{3-5}_[a-zA-Z0-9]+$"
 # Get changed .cls files
 FILES_CHANGED=($(git diff --name-only --diff-filter=A origin/main...HEAD -- 'lwc/*'))
 
