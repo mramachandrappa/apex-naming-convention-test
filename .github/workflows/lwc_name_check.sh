@@ -40,6 +40,6 @@ else
     echo -e "\nINVALID LWC components name found!:\n${INVALID_FILES[*]}"
     LWC_NAME_CHECK="Failed!"
     echo "INVALID_FILES=${INVALID_FILES[*]}" >> "$GITHUB_OUTPUT"
-    echo "LWC_NAME_CHECK=${LWC_NAME_CHECK}" >> "$GITHUB_OUTPUT"
+    echo "LWC_NAME_CHECK=$LWC_NAME_CHECK" >> "$GITHUB_OUTPUT"
     exit 1
 fi

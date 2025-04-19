@@ -49,6 +49,6 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             **Apex Class Naming Convention Check**
-            - Result        : ${{ steps.apex_check.outputs.LWC_NAME_CHECK }}
+            - Result        : ${{ steps.apex_check.outputs.APEX_CLS_NAME_CHECK }}
             - Invalid Files : ${{ steps.apex_check.outputs.INVALID_FILES }}
           edit-mode: replace

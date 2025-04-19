@@ -49,6 +49,6 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             **LWC Component Naming Convention Check**
-            - Result        : ${{ steps.lwc_check.outputs.APEX_CLS_NAME_CHECK }}
+            - Result        : ${{ steps.lwc_check.outputs.LWC_NAME_CHECK }}
             - Invalid Files : ${{ steps.lwc_check.outputs.INVALID_FILES }}
           edit-mode: replace
