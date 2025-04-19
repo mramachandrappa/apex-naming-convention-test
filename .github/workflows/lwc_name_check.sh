@@ -23,7 +23,7 @@ for FILE_PATH in "${FILES_CHANGED[@]}"; do
     COMPONENT_NAME=$(echo "$FILE_PATH" | cut -d'/' -f2)  
     matched=false
 
-    if echo "$COMPONENT_NAME" | grep -Eq "$REGEX_PATTERN"; then
+    if echo "$COMPONENT_NAME" | grep -Eiq "$REGEX_PATTERN"; then
         echo "$COMPONENT_NAME passed LWC component naming convention check."
     else
         INVALID_FILES+=("$COMPONENT_NAME")
