@@ -6,7 +6,7 @@ on:
       - "lwc/**" # Adjust path based on your repo structure 
     branches:
       - main
-      # - "feature/**"
+      - "feature/**"
 
 permissions:
   pull-requests: write
