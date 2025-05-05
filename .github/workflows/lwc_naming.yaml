@@ -1,9 +1,9 @@
-name: "Workflow: Objects naming convention check"
+name: "Workflow: LWS component naming convention check"
 
 on:
   pull_request:
     paths:
-      - "objects/**" # Adjust path based on your repo structure 
+      - "lwc/**" # Adjust path based on your repo structure 
     branches:
       - main
       - "feature/**"
@@ -25,13 +25,13 @@ jobs:
           # improve performance
           fetch-depth: 0
 
-      - name: Verify Objects naming convention
-        id: objects_check
+      - name: Verify LWC component naming convention
+        id: lwc_check
         env:
-          REGEX_PATTERN: ${{ vars.REGEX_PATTERN_OBJECTS }}
+          REGEX_PATTERN: ${{ vars.REGEX_PATTERN_LWC }}
           BASE_REF: origin/${{ github.event.pull_request.base.ref }}
         run: |
-          bash .github/workflows/objects_name_check.sh
+          bash .github/workflows/lwc_name_check.sh
 
       - name: Find Comment
         if: success() || failure() 
@@ -40,16 +40,16 @@ jobs:
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: 'github-actions[bot]'
-          body-includes: Objects Naming Convention Check
+          body-includes: LWC Component Naming Convention Check
 
-      - name: Post Objects naming convention check result as a PR comment
+      - name: Post Apex class naming convention as a PR comment
         if: success() || failure()  # This ensures the step runs even if a previous step fails
         uses: peter-evans/create-or-update-comment@fb32f438a02fd91daaa409c30aae6f6b8d58b608 #pinv4
         with:
           comment-id: ${{ steps.find_comment.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            **Objects Naming Convention Check**
-            - Result        : ${{ steps.objects_check.outputs.OBJECTS_NAME_CHECK }}
-            - Invalid Files : ${{ steps.objects_check.outputs.INVALID_FILES }}
+            **LWC Component Naming Convention Check**
+            - Result        : ${{ steps.lwc_check.outputs.LWC_NAME_CHECK }}
+            - Invalid Files : ${{ steps.lwc_check.outputs.INVALID_FILES }}
           edit-mode: replace
