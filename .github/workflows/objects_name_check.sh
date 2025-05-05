@@ -10,7 +10,7 @@ echo "BASE_REF is $BASE_REF"
 # Get changed .object files
 FILES_CHANGED=($(git diff --name-only --diff-filter=A $BASE_REF...HEAD -- 'objects/*'))
 
-echo -e "Found the following objects with changes:\n${FILES_CHANGED[*]}\n"
+echo -e "Newly added objects file detected:\n${FILES_CHANGED[*]}\n"
 
 if [[ ${#FILES_CHANGED[@]} -eq 0 ]]; then
     echo "No .object files found with changes"
