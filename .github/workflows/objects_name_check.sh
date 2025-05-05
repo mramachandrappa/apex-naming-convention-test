@@ -13,7 +13,7 @@ FILES_CHANGED=($(git diff --name-only --diff-filter=A $BASE_REF...HEAD -- 'objec
 echo -e "Found the following objects with changes:\n${FILES_CHANGED[*]}\n"
 
 if [[ ${#FILES_CHANGED[@]} -eq 0 ]]; then
-    echo "No objects with changes"
+    echo "No .object files found with changes"
     echo "INVALID_FILES=None!" >> "$GITHUB_OUTPUT"
     echo "OBJECTS_NAME_CHECK=$OBJECTS_NAME_CHECK" >> "$GITHUB_OUTPUT"
     exit 0
@@ -21,7 +21,7 @@ fi
 
 # Validate naming conventions
 for FILE_PATH in "${FILES_CHANGED[@]}"; do
-    OBJECTS_NAME=$(echo "$FILE_PATH" | cut -d'/' -f2)  
+    OBJECTS_NAME=$(basename "$FILE_PATH")
     matched=false
 
     if echo "$OBJECTS_NAME" | grep -Eq "$REGEX_PATTERN"; then
