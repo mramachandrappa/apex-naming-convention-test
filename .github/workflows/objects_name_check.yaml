@@ -51,6 +51,6 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             **Objects Naming Convention Check**
-            - Result        : ${{ steps.objects_check.outputs.OBJECTS_NAME_CHECK }}
+            - Result        : ${{ steps.objects_check.outputs.NAME_CHECK }}
             - Invalid Files : ${{ steps.objects_check.outputs.INVALID_FILES }}
           edit-mode: replace
