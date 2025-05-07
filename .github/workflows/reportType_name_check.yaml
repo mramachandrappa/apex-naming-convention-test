@@ -1,9 +1,9 @@
-name: "Workflow: Objects naming convention check"
+name: "Workflow: reportType naming convention check"
 
 on:
   pull_request:
     paths:
-      - "objects/*.object" # Adjust path based on your repo structure 
+      - "reportType/*.reoprtType" # Adjust path based on your repo structure 
     branches:
       - main
       - "feature/**"
@@ -25,10 +25,10 @@ jobs:
           # improve performance
           fetch-depth: 0
 
-      - name: Verify Objects naming convention
+      - name: Verify reportType naming convention
         id: objects_check
         env:
-          REGEX_PATTERN: ${{ vars.REGEX_PATTERN_OBJECTS }}
+          REGEX_PATTERN: ${{ vars.REGEX_PATTERN_REPORT_TYPE }}
           BASE_REF: origin/${{ github.event.pull_request.base.ref }}
           FOLDER_NAME: reportType
         run: |
@@ -41,7 +41,7 @@ jobs:
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: 'github-actions[bot]'
-          body-includes: Objects Naming Convention Check
+          body-includes: reportType Naming Convention Check
 
       - name: Post Objects naming convention check result as a PR comment
         if: success() || failure()  # This ensures the step runs even if a previous step fails
@@ -50,7 +50,7 @@ jobs:
           comment-id: ${{ steps.find_comment.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            **Objects Naming Convention Check**
+            **reportType Naming Convention Check**
             - Result        : ${{ steps.objects_check.outputs.OBJECTS_NAME_CHECK }}
             - Invalid Files : ${{ steps.objects_check.outputs.INVALID_FILES }}
           edit-mode: replace
