@@ -3,7 +3,7 @@ name: "Workflow: reportType naming convention check"
 on:
   pull_request:
     paths:
-      - "reportType/*.reoprtType" # Adjust path based on your repo structure 
+      - "reportType/*.reportType" # Adjust path based on your repo structure 
     branches:
       - main
       - "feature/**"
