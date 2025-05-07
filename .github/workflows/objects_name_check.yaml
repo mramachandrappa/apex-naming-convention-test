@@ -30,7 +30,7 @@ jobs:
         env:
           REGEX_PATTERN: ${{ vars.REGEX_PATTERN_OBJECTS }}
           BASE_REF: origin/${{ github.event.pull_request.base.ref }}
-          FOLDER_NAME: reportType
+          FOLDER_NAME: objects
         run: |
           bash .github/workflows/scripts/naming_convention_check.sh
 
