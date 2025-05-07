@@ -38,7 +38,7 @@ if [[ ${#INVALID_FILES[@]} -eq 0 ]]; then
     echo "INVALID_FILES=None!" >> "$GITHUB_OUTPUT"
     echo "NAME_CHECK=$NAME_CHECK" >> "$GITHUB_OUTPUT"
 else
-    echo -e "\nINVALID naming convention followed for following files!:\n${INVALID_FILES[*]}"
+    echo -e "\nINVALID naming convention detected for following files!:\n${INVALID_FILES[*]}"
     NAME_CHECK="Failed!"
     echo "INVALID_FILES=${INVALID_FILES[*]}" >> "$GITHUB_OUTPUT"
     echo "NAME_CHECK=$NAME_CHECK" >> "$GITHUB_OUTPUT"
