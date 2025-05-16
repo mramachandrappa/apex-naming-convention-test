@@ -46,4 +46,5 @@ else
         continue
     else
         exit 1
+    fi
 fi
