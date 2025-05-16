@@ -18,7 +18,7 @@ if [[ ${#FILES_CHANGED[@]} -eq 0 ]]; then
     echo "LWC_NAME_CHECK=$LWC_NAME_CHECK" >> "$GITHUB_OUTPUT"
     exit 0
 fi
-a\
+
 # Validate naming conventions
 for FILE_PATH in "${FILES_CHANGED[@]}"; do
     COMPONENT_NAME=$(echo "$FILE_PATH" | cut -d'/' -f2)  
