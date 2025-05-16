@@ -43,7 +43,7 @@ else
     echo "INVALID_FILES=${INVALID_FILES[*]}" >> "$GITHUB_OUTPUT"
     echo "NAME_CHECK=$NAME_CHECK" >> "$GITHUB_OUTPUT"
     
-    if [ "$ENFORCE" = false ]; then
+    if [ "$ENFORCE" = True ]; then
         exit 1
     fi
 fi
