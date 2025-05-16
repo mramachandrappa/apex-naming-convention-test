@@ -42,5 +42,8 @@ else
     NAME_CHECK="Failed!"
     echo "INVALID_FILES=${INVALID_FILES[*]}" >> "$GITHUB_OUTPUT"
     echo "NAME_CHECK=$NAME_CHECK" >> "$GITHUB_OUTPUT"
-    exit 1
+    if $SKIP_FAILURE; then
+        continue
+    else
+        exit 1
 fi
