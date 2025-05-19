@@ -54,4 +54,5 @@ jobs:
             **Objects Naming Convention Check**
             - Result        : ${{ steps.objects_check.outputs.NAME_CHECK }}
             - Invalid Files : ${{ steps.objects_check.outputs.INVALID_FILES }}
+            - Message       : ${{ steps.objects_check.outputs.MESSAGE }}
           edit-mode: replace
