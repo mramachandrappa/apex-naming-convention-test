@@ -1,12 +1,12 @@
-name: Check Salesforce Encryption Scheme Changes
+name: "Workflow: reportType naming convention check"
 
 on:
   pull_request:
     paths:
-      - "classes/*.cls" # Adjust path based on your repo structure
+      - "reportType/*.reportType" # Adjust path based on your repo structure 
     branches:
       - main
-      # - "feature/**"
+      - "feature/**"
 
 permissions:
   pull-requests: write
@@ -25,12 +25,15 @@ jobs:
           # improve performance
           fetch-depth: 0
 
-      - name: Verify Apex class naming convention
-        id: apex_check
+      - name: Verify reportType naming convention
+        id: objects_check
         env:
-          REGEX_PATTERN: ${{ vars.REGEX_PATTERN }}
+          REGEX_PATTERN: ${{ vars.REGEX_PATTERN_REPORT_TYPE }}
+          BASE_REF: origin/${{ github.event.pull_request.base.ref }}
+          FOLDER_NAME: reportType
+          ENFORCE: false
         run: |
-          bash .github/workflows/scripts/apex_name_check.sh
+          bash .github/workflows/scripts/naming_convention_check.sh
 
       - name: Find Comment
         if: success() || failure() 
@@ -39,16 +42,17 @@ jobs:
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: 'github-actions[bot]'
-          body-includes: Apex Class Naming Convention Check
+          body-includes: reportType Naming Convention Check
 
-      - name: Post Apex class naming convention as a PR comment
+      - name: Post Objects naming convention check result as a PR comment
         if: success() || failure()  # This ensures the step runs even if a previous step fails
         uses: peter-evans/create-or-update-comment@fb32f438a02fd91daaa409c30aae6f6b8d58b608 #pinv4
         with:
           comment-id: ${{ steps.find_comment.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            **Apex Class Naming Convention Check**
-            - Result        : ${{ steps.apex_check.outputs.APEX_CLS_NAME_CHECK }}
-            - Invalid Files : ${{ steps.apex_check.outputs.INVALID_FILES }}
+            **reportType Naming Convention Check**
+            - Result        : ${{ steps.objects_check.outputs.NAME_CHECK }}
+            - Invalid Files : ${{ steps.objects_check.outputs.INVALID_FILES }}
+            - Message       : ${{ steps.objects_check.outputs.MESSAGE }}
           edit-mode: replace
