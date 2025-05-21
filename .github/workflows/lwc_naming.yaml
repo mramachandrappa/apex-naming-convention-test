@@ -31,7 +31,7 @@ jobs:
           REGEX_PATTERN: ${{ vars.REGEX_PATTERN_LWC }}
           BASE_REF: origin/${{ github.event.pull_request.base.ref }}
         run: |
-          bash .github/workflows/lwc_name_check.sh
+          bash .github/workflows/scripts/lwc_name_check.sh
 
       - name: Find Comment
         if: success() || failure() 

@@ -30,7 +30,7 @@ jobs:
         env:
           REGEX_PATTERN: ${{ vars.REGEX_PATTERN }}
         run: |
-          bash .github/workflows/apex_name_check.sh
+          bash .github/workflows/scripts/apex_name_check.sh
 
       - name: Find Comment
         if: success() || failure() 
