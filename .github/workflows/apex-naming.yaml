@@ -1,4 +1,4 @@
-name: Check Salesforce Encryption Scheme Changes
+name: "Workflow: Apex class naming convention check"
 
 on:
   pull_request:
