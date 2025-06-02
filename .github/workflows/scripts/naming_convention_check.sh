@@ -22,7 +22,7 @@ echo -e "Files detected for naming convention check:\n${FILES_CHANGED[*]}\n"
 # Validate naming conventions
 for FILE_PATH in "${FILES_CHANGED[@]}"; do
     FILE_NAME=$(basename "$FILE_PATH")
-    if [ $FOLDER_NAME = "lwc" ]; then
+    if [ "$FOLDER_NAME" = "lwc" ]; then
         FILE_NAME=$(echo "$FILE_PATH" | cut -d'/' -f2)  
     fi
 
@@ -36,13 +36,6 @@ for FILE_PATH in "${FILES_CHANGED[@]}"; do
     fi
 done
 
-if [ "$ENFORCE" = true ]; then
-    echo "MESSAGE=Kindly update $FOLDER_NAME as per naming convention defined." >> "$GITHUB_OUTPUT"
-    exit 1
-else
-    echo "MESSAGE=Hey! You probably updated $FOLDER_NAME name incorrectly. Please check!" >> "$GITHUB_OUTPUT"
-fi
-
 # Output results
 if [[ ${#INVALID_FILES[@]} -eq 0 ]]; then
     echo "\nAll files passed naming conventions."
@@ -54,4 +47,11 @@ else
     NAME_CHECK="Failed!"
     echo "INVALID_FILES=${INVALID_FILES[*]}" >> "$GITHUB_OUTPUT"
     echo "NAME_CHECK=$NAME_CHECK" >> "$GITHUB_OUTPUT"
+    
+    if [ "$ENFORCE" = true ]; then
+        echo "MESSAGE=Kindly update $FOLDER_NAME as per naming convention defined." >> "$GITHUB_OUTPUT"
+        exit 1
+    else
+        echo "MESSAGE=Hey! You probably updated $FOLDER_NAME name incorrectly. Please check!" >> "$GITHUB_OUTPUT"
+    fi
 fi

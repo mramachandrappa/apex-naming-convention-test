@@ -28,7 +28,7 @@ jobs:
       - name: Verify LWC component naming convention
         id: lwc_check
         env:
-          REGEX_PATTERN: ${{ vars.REGEX_PATTERN_OBJECTS }}
+          REGEX_PATTERN: ${{ vars.REGEX_PATTERN_LWC }}
           BASE_REF: origin/${{ github.event.pull_request.base.ref }}
           FOLDER_NAME: lwc
           ENFORCE: true
