@@ -8,7 +8,7 @@ echo "REGEX_PATTERN is $REGEX_PATTERN"
 echo "BASE_REF is $BASE_REF"
 
 # Get changed .object files
-FILES_CHANGED=($(git diff --name-only --diff-filter=A $BASE_REF...HEAD -- "$FOLDER_NAME/*"))
+FILES_CHANGED=($(git diff --name-only --diff-filter=AM $BASE_REF...HEAD -- "$FOLDER_NAME/*"))
 
 if [[ ${#FILES_CHANGED[@]} -eq 0 ]]; then
     echo "No files found with changes"
@@ -25,7 +25,7 @@ for FILE_PATH in "${FILES_CHANGED[@]}"; do
     if [ $FOLDER_NAME = "lwc" ]; then
         FILE_NAME=$(echo "$FILE_PATH" | cut -d'/' -f2)  
     fi
-    
+
     matched=false
 
     if echo "$FILE_NAME" | grep -Eq "$REGEX_PATTERN"; then
