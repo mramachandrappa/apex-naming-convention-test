@@ -1,0 +1,59 @@
+name: "Workflow: Triggers naming convention check"
+
+on:
+  pull_request:
+    paths:
+      - "triggers/*" # Adjust path based on your repo structure
+    branches:
+      - main
+      - "feature/**"
+      - "env/**"
+
+permissions:
+  pull-requests: write
+  contents: read
+
+jobs:
+  check-naming-convention:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # pin@v4
+        with:
+          token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
+
+          # If you use VALIDATE_ALL_CODEBASE = true, you can remove this line to
+          # improve performance
+          fetch-depth: 0
+
+      - name: Verify Apex class naming convention
+        id: trigger_check
+        env:
+          REGEX_PATTERN: ${{ vars.REGEX_PATTERN }}
+          BASE_REF: origin/${{ github.event.pull_request.base.ref }}
+          FOLDER_NAME: triggers
+          ENFORCE: true
+        run: |
+          bash .github/workflows/scripts/naming_convention_check.sh
+
+      - name: Find Comment
+        if: success() || failure() 
+        uses: peter-evans/find-comment@v3
+        id: find_comment
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: Triggers Naming Convention Check
+
+      - name: Post Triggers naming convention as a PR comment
+        if: success() || failure()  # This ensures the step runs even if a previous step fails
+        uses: peter-evans/create-or-update-comment@fb32f438a02fd91daaa409c30aae6f6b8d58b608 #pinv4
+        with:
+          comment-id: ${{ steps.find_comment.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            **Triggers Naming Convention Check**
+            - Result        : ${{ steps.trigger_check.outputs.NAME_CHECK }}
+            - Invalid Files : ${{ steps.trigger_check.outputs.INVALID_FILES }}
+            - Message       : ${{ steps.trigger_check.outputs.MESSAGE }}
+          edit-mode: replace
