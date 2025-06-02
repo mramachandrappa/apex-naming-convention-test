@@ -6,7 +6,8 @@ on:
       - "classes/*.cls" # Adjust path based on your repo structure
     branches:
       - main
-      # - "feature/**"
+      - "feature/**"
+      - "env/**"
 
 permissions:
   pull-requests: write
@@ -29,8 +30,11 @@ jobs:
         id: apex_check
         env:
           REGEX_PATTERN: ${{ vars.REGEX_PATTERN }}
+          BASE_REF: origin/${{ github.event.pull_request.base.ref }}
+          FOLDER_NAME: classes
+          ENFORCE: true
         run: |
-          bash .github/workflows/scripts/apex_name_check.sh
+          bash .github/workflows/scripts/naming_convention_check.sh
 
       - name: Find Comment
         if: success() || failure() 
@@ -49,6 +53,7 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             **Apex Class Naming Convention Check**
-            - Result        : ${{ steps.apex_check.outputs.APEX_CLS_NAME_CHECK }}
+            - Result        : ${{ steps.apex_check.outputs.NAME_CHECK }}
             - Invalid Files : ${{ steps.apex_check.outputs.INVALID_FILES }}
+            - Message       : ${{ steps.apex_check.outputs.MESSAGE }}
           edit-mode: replace

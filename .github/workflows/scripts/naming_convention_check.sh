@@ -22,6 +22,10 @@ echo -e "Files detected for naming convention check:\n${FILES_CHANGED[*]}\n"
 # Validate naming conventions
 for FILE_PATH in "${FILES_CHANGED[@]}"; do
     FILE_NAME=$(basename "$FILE_PATH")
+    if [ $FOLDER_NAME = "lwc" ]; then
+        FILE_NAME=$(echo "$FILE_PATH" | cut -d'/' -f2)  
+    fi
+    
     matched=false
 
     if echo "$FILE_NAME" | grep -Eq "$REGEX_PATTERN"; then
