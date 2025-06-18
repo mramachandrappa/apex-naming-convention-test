@@ -47,9 +47,9 @@ else
     echo "NAME_CHECK=$NAME_CHECK" >> "$GITHUB_OUTPUT"
     
     if [ "$ENFORCE" = true ]; then
-        echo "MESSAGE=Kindly update $FOLDER_NAME as per naming convention defined." >> "$GITHUB_OUTPUT"
+        echo "MESSAGE=Kindly update $FOLDER_NAME as per naming convention defined. Refer [confluence link](https://github.com/mramachandrappa/apex-naming-convention-test)" >> "$GITHUB_OUTPUT"
         exit 1
     else
-        echo "MESSAGE=Hey! You probably updated $FOLDER_NAME name incorrectly. Please check!" >> "$GITHUB_OUTPUT"
+        echo "MESSAGE=Hey! You probably updated $FOLDER_NAME name incorrectly. Refer [confluence link](https://github.com/mramachandrappa/apex-naming-convention-test)" >> "$GITHUB_OUTPUT"
     fi
 fi
