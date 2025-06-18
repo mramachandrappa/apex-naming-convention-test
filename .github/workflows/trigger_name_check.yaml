@@ -55,5 +55,5 @@ jobs:
             **Triggers Naming Convention Check**
             - Result        : ${{ steps.trigger_check.outputs.NAME_CHECK }}
             - Invalid Files : ${{ steps.trigger_check.outputs.INVALID_FILES }}
-            - Message       : ${{ steps.trigger_check.outputs.MESSAGE }}. Refer [github link](https://github.com/mramachandrappa/apex-naming-convention-test)
+            - Message       : ${{ steps.trigger_check.outputs.MESSAGE }}.
           edit-mode: replace
